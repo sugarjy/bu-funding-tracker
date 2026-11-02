@@ -183,7 +183,7 @@ h1 {
 /* 汇总数字 */
 .stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
@@ -213,8 +213,27 @@ h1 {
   color: var(--gray-600);
 }
 
-/* 筛选 */
-.search {
+/* 筛选：四个文字搜索框 */
+.fields {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px 32px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.field > span {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--gray-600);
+}
+
+.field input {
   width: 100%;
   padding: 10px 0;
   border: none;
@@ -229,8 +248,9 @@ h1 {
   -webkit-appearance: none;
 }
 
-.search::placeholder { color: var(--gray-800); }
-.search:focus { border-bottom-color: var(--gray-600); }
+.field input::placeholder { color: var(--gray-800); }
+.field input:focus { border-bottom-color: var(--gray-600); }
+.field input::-webkit-calendar-picker-indicator { opacity: 0.4; }
 
 .filter-row {
   display: flex;
@@ -400,6 +420,24 @@ h1 {
 
 .pi-link:hover { color: var(--highlight); }
 
+.org { margin: 0; font-size: var(--fs-xs); line-height: 1.6; }
+.place { color: var(--gray-600); }
+
+.org-link {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--gray-400);
+  text-align: left;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+
+.org-link:hover { color: var(--highlight); text-decoration-color: currentColor; }
+
 .amount {
   flex-shrink: 0;
   text-align: right;
@@ -466,7 +504,16 @@ h1 {
 .more:hover { color: var(--highlight); }
 
 /* 右侧排行 */
-.leaders { position: sticky; top: 96px; }
+.leaders {
+  position: sticky;
+  top: 96px;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.leaders::-webkit-scrollbar { display: none; }
+.leaders .section { margin-bottom: 40px; }
 
 .leaders ol {
   list-style: none;
@@ -541,7 +588,12 @@ h1 {
   .section { margin-bottom: 48px; }
   .layout { grid-template-columns: 1fr; gap: 0; }
   .leaders { position: static; order: -1; }
+  .fields { grid-template-columns: 1fr 1fr; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stat:nth-child(3) { border-left: none; padding-left: 0; border-top: 1px solid var(--line); }
+  .stat:nth-child(4) { border-top: 1px solid var(--line); }
   .stat { padding-left: 14px; }
+  .leaders { max-height: none; overflow: visible; }
   .award { flex-direction: column; gap: 8px; }
   .amount { text-align: left; }
   .section-label .rule { width: 48px; }

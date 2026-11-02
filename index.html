@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BU 科研资助追踪</title>
+  <title>美国科研资助追踪</title>
   <script>
     // 在样式加载前应用已保存的主题，避免刷新时闪一下
     try {
@@ -18,7 +18,7 @@
 </head>
 <body>
   <nav class="topbar">
-    <span class="brand">bu/funding</span>
+    <span class="brand">us/funding</span>
     <div class="topbar-right">
       <span class="topbar-meta" id="meta"></span>
       <button class="theme-toggle" id="theme-toggle" type="button"></button>
@@ -27,8 +27,8 @@
 
   <main class="page">
     <header class="hero fade-in">
-      <h1>BU 科研资助追踪</h1>
-      <p class="lead">波士顿大学研究人员近期获得的 NIH 与 NSF 资助。数据来自公开的联邦资助数据库。</p>
+      <h1>美国科研资助追踪</h1>
+      <p class="lead">全美高校与研究机构近期获得的 NIH 与 NSF 资助。按教授、学校、院系查找，数据来自公开的联邦资助数据库。</p>
     </header>
 
     <section class="section fade-in" aria-label="汇总">
@@ -38,7 +38,22 @@
 
     <section class="section fade-in" aria-label="筛选">
       <div class="section-label"><span>filter</span><div class="rule"></div></div>
-      <input type="search" id="search" class="search" placeholder="搜索教授、项目标题、资助机构…" />
+      <div class="fields">
+        <label class="field"><span>教授</span>
+          <input type="search" id="professor" placeholder="如 cheng jixin" autocomplete="off" />
+        </label>
+        <label class="field"><span>学校</span>
+          <input type="search" id="institution" list="institution-list" placeholder="如 boston university" autocomplete="off" />
+        </label>
+        <label class="field"><span>院系</span>
+          <input type="search" id="department" list="department-list" placeholder="如 psychology" autocomplete="off" />
+        </label>
+        <label class="field"><span>关键词</span>
+          <input type="search" id="search" placeholder="项目标题、资助机构…" autocomplete="off" />
+        </label>
+      </div>
+      <datalist id="institution-list"></datalist>
+      <datalist id="department-list"></datalist>
       <div class="filter-row">
         <label><span>时间</span>
           <select id="range">
@@ -55,8 +70,8 @@
             <option value="NSF">NSF</option>
           </select>
         </label>
-        <label><span>院系</span>
-          <select id="department"><option value="">全部</option></select>
+        <label><span>州</span>
+          <select id="state"><option value="">全部</option></select>
         </label>
         <label><span>排序</span>
           <select id="sort">
@@ -85,9 +100,15 @@
         <button class="more" id="more" hidden>加载更多 ↓</button>
       </section>
 
-      <aside class="section leaders" aria-label="资助金额最高的 PI">
-        <div class="section-label"><span>top pis</span><div class="rule"></div></div>
-        <ol id="leaders"></ol>
+      <aside class="leaders">
+        <section class="section" aria-label="资助金额最高的学校">
+          <div class="section-label"><span>top schools</span><div class="rule"></div></div>
+          <ol id="top-institutions"></ol>
+        </section>
+        <section class="section" aria-label="资助金额最高的 PI">
+          <div class="section-label"><span>top pis</span><div class="rule"></div></div>
+          <ol id="top-pis"></ol>
+        </section>
       </aside>
     </div>
   </main>
@@ -100,7 +121,8 @@
     <span>更新数据：<code>python3 scripts/fetch_data.py</code></span>
   </footer>
 
-  <script src="data/awards.js"></script>
+  <!-- 月度数据文件（data/shards/*.js）由 main.js 按需加载 -->
+  <script src="data/meta.js"></script>
   <!-- 不用 type="module"：Chrome 不允许 file:// 下加载模块脚本 -->
   <script src="src/main.js"></script>
 </body>
